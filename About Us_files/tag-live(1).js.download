@@ -1,0 +1,77 @@
+(function(networkId) {
+var automaticIntegrations = {"gaMeasurementId":{"paramName":"ga_measurement_id"},"gaSessionId":{"paramName":"ga_session_id"},"googleAnalytics":{"paramName":"g_cid"}};
+
+var cacheLifetimeDays = 30;
+
+var customDataWaitForConfig = [
+  { on: function() { return Invoca.Client.parseCustomDataField("anonymousId", "Last", "JavascriptDataLayer", "analytics.user().anonymousId()"); }, paramName: "anonymousId", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("calling_page", "Last", "JavascriptDataLayer", "location.hostname + location.pathname"); }, paramName: "calling_page", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("cookie", "Last", "JavascriptDataLayer", "document.cookie"); }, paramName: "cookie", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("customer_id", "Last", "URLParam", ""); }, paramName: "customer_id", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("gclid", "Last", "URLParam", ""); }, paramName: "gclid", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("ipaddress", "Last", "URLParam", ""); }, paramName: "ipaddress", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("landing_page", "First", "JavascriptDataLayer", "location.href"); }, paramName: "landing_page", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("last_request_date", "Last", "JavascriptDataLayer", "new Date().toISOString()"); }, paramName: "last_request_date", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("msclkid", "Last", "URLParam", ""); }, paramName: "msclkid", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("useragent", "Last", "JavascriptDataLayer", "window.navigator.userAgent"); }, paramName: "useragent", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("utm_campaign", "Last", "URLParam", ""); }, paramName: "utm_campaign", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("utm_content", "Last", "URLParam", ""); }, paramName: "utm_content", fallbackValue: null },
+  { on: function() { return Invoca.Client.parseCustomDataField("utm_medium", "Last", "URLParam", ""); }, paramName: "utm_medium", fallbackValue: function() { return Invoca.PNAPI.currentPageSettings.poolParams.utm_medium || null; } },
+  { on: function() { return Invoca.Client.parseCustomDataField("utm_source", "Last", "URLParam", ""); }, paramName: "utm_source", fallbackValue: function() { return Invoca.PNAPI.currentPageSettings.poolParams.utm_source || null; } }
+];
+
+var defaultCampaignId = "4129788";
+
+var destinationSettings = {
+  paramName: null
+};
+
+var numbersToReplace = {
+  "+18668891116": null,
+  "+18553306433": null
+};
+
+var organicSources = true;
+
+var reRunAfter = null;
+
+var requiredParams = null;
+
+var resetCacheOn = ['gclid', 'utm_source', 'utm_medium'];
+
+var waitFor = 0;
+
+var customCodeIsSet = (function() {
+  Invoca.Client.customCode = function(options) {
+    options.integrations.googleAnalytics = true;
+return options;
+  };
+
+  return true;
+})();
+
+var generatedOptions = {
+  active:              true,
+  autoSwap:            false,
+  cookieDays:          cacheLifetimeDays,
+  country:             "US",
+  dataSilo:            "us",
+  defaultCampaignId:   defaultCampaignId,
+  destinationSettings: destinationSettings,
+  disableUrlParams:    [],
+  doNotSwap:           [],
+  integrations:        automaticIntegrations,
+  maxWaitFor:          waitFor,
+  networkId:           networkId || null,
+  numberToReplace:     numbersToReplace,
+  organicSources:      organicSources,
+  poolParams:          {},
+  reRunAfter:          reRunAfter,
+  requiredParams:      requiredParams,
+  resetCacheOn:        resetCacheOn,
+  waitForData:         customDataWaitForConfig
+};
+
+Invoca.Client.startFromWizard(generatedOptions);
+
+})(2085);
